@@ -27,12 +27,36 @@ const fetchLocation = async (lat: number, lon: number) => {
 const fetchWeather = async (location: string) => {
   try {
     const res = await getWeather(location)
-    if (res) {
-      return res
+    if (res.list) {
+      return res.list[0]
     }
   } catch (error) {
     console.log('error', error)
   }
 }
 
-export { fetchBackground, fetchLocation, fetchWeather }
+const handleTemperature = (temp: number, unitInCelsius: boolean) => {
+  if (unitInCelsius) {
+    return temp + '°C'
+  } else {
+    return (temp * 1.8) + 32 + '°F'
+  }
+}
+
+const handleBackgroundColor = (temperature: number | null) => {
+  if (!temperature) return 'rgba(209, 213, 219, 0.9)'
+  
+  if (temperature < 15) {
+    return 'rgba(56, 189, 248, 0.9)'
+  } else if (temperature >= 15 && temperature <= 35) {
+    return 'rgba(250, 204, 21, 0.9)'
+  } else if (temperature > 35) {
+    return 'rgba(248, 113, 113, 0.9)'
+  } else {
+    return 'rgba(209, 213, 219, 0.9)'
+  }
+}
+
+
+
+export { fetchBackground, fetchLocation, fetchWeather, handleTemperature , handleBackgroundColor}
