@@ -1,8 +1,15 @@
+'use client'
+
+import SearchInput from "@/components/SearchInput/search.input"
+import MainContainer from "@/components/MainContainer/main.container"
+import { useState } from 'react'
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+  const [search, setSearch] = useState('')
 
-    </main>
+  return (
+    <MainContainer>
+      <SearchInput search={search} onSearchChange={(val) => setSearch(val)} />
+    </MainContainer>
   );
 }
