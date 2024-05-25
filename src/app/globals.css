@@ -18,8 +18,15 @@ body {
   background: rgb(var(--bg));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 2s linear infinite;
 }

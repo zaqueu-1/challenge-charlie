@@ -1,11 +1,14 @@
-import React, { PropsWithChildren} from 'react'
+import React, { PropsWithChildren } from 'react'
 
-function MainContainer(props: PropsWithChildren) {
+function MainContainer(props: PropsWithChildren & { background: string }) {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-start bg-red-50">
+    <div
+      className="flex flex-col min-h-screen items-center justify-start"
+      style={{ backgroundImage: `url(https://bing.com/${props.background})` }}
+    >
       {props.children}
     </div>
-  )
+  );
 }
 
 export default MainContainer
