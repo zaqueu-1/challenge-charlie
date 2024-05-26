@@ -13,6 +13,7 @@ export default function Home() {
   const [background, setBackground] = useState('')
   const [weather, setWeather] = useState<WeatherArray>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -22,12 +23,10 @@ export default function Home() {
 
         fetchLocation(latitude, longitude).then((location) => {
           setLocation(location)
-        }).catch(() => {
-          setLoading(false)
         })
       },
       (error) => {
-        console.error(error)
+        console.error('Geolocation error:', error)
         setLoading(false)
       }
     )
@@ -37,26 +36,29 @@ export default function Home() {
     if (background) return
     fetchBackground().then((background) => {
       setBackground(background)
-    }).catch(() => {
-      setLoading(false)
     })
   }, [background])
 
   useEffect(() => {
     if (!location) return
 
+    setLoading(true)
     fetchWeather(location).then((weather) => {
+      setLoading(false)
+      if (weather === 'not found'){
+        setWeather([])
+        setError(true)
+        return
+      }
       setWeather(weather)
-      setLoading(false)
-    }).catch(() => {
-      setLoading(false)
+      setError(false)
     })
   }, [location])
 
   return (
     <MainContainer background={background}>
-      <SearchInput onSearchChange={(location) => [setLocation(location), setLoading(true)]} location={location} loading={loading} />
-      <WeatherBox weather={weather} />
+      <SearchInput onSearchChange={(search) => { setLocation(search); setLoading(true); }} location={location} loading={loading} />
+      <WeatherBox weather={weather} error={error} />
     </MainContainer>
   )
 }

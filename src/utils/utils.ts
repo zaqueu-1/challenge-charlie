@@ -7,6 +7,7 @@ const fetchBackground = async () => {
     try {
       const res = await getBackground()
       if (res) {
+        console.log('res', res)
         return res.images[0].url
       }
     } catch (error) {
@@ -28,6 +29,9 @@ const fetchLocation = async (lat: number, lon: number) => {
 const fetchWeather = async (location: string) => {
   try {
     const res = await getWeather(location)
+    if (res.message === 'city not found') {
+      return 'not found'
+    }
     if (res.list) {
       return res.list
     }
@@ -64,7 +68,9 @@ const handleBackgroundColor = (temperature: number | null) => {
 }
 
 const findNextDaysWeather = (weathers: WeatherArray) => {
-  if (weathers.length === 0) return []
+  if (!weathers || weathers.length === 0) {
+    return []
+  }
 
   const initialDate = new Date(weathers[0].dt_txt)
 
