@@ -58,7 +58,7 @@ Abaixo, algumas informações sobre minhas escolhas e tomadas de decisão durant
 * Para a unidade de temperatura, além de torná-la clicável, adicionei uma legenda contendo a unidade oposta à atual. Ao ser clicada, ela alterna a unidade de todas as ocorrências de temperatura na página, assim como a própria legenda;
 * Incluí uma mensagem de "Sua busca não retornou resultados" para casos onde a API não consiga encontrar uma localidade;
 * Incluí no input uma renderização condicional que exibe 'Buscando...' enquanto a API não retorna a localidade;
-* 
+* Mantive a .env no repositório pelo fato de a chave de API fornecida no desafio para a OpenCage estar inválida. Criei minha própria conta e inseri minha chave, que servirá para os eventuais testes da equipe de avaliação.
 
 ## Autor
 
