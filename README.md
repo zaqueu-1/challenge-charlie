@@ -1,4 +1,4 @@
-<img src="https://github.com/zaqueu-1/challenge-charlie/blob/main/github/logo.png" alt="logo">
+<img src="https://github.com/zaqueu-1/challenge-charlie/blob/master/github/logo.png" alt="logo">
 
 ## Challenge Charlie | Teste Técnico
 
