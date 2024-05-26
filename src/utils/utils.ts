@@ -37,15 +37,15 @@ const fetchWeather = async (location: string) => {
 
 const handleTemperature = (temp: number, unitInCelsius: boolean) => {
   if (unitInCelsius) {
-    return temp + '°C'
+    return temp
   } else {
-    return (temp * 1.8) + 32 + '°F'
+    return (temp * 1.8) + 32
   }
 }
 
 const handleBackgroundColor = (temperature: number | null) => {
   if (!temperature) return 'rgba(209, 213, 219, 0.9)'
-  
+
   if (temperature < 15) {
     return 'rgba(56, 189, 248, 0.9)'
   } else if (temperature >= 15 && temperature <= 35) {

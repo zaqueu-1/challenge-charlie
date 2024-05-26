@@ -57,7 +57,15 @@ function WeatherBox(props: WeatherProps) {
                     <div className='flex flex-col gap-4 items-start justify-between w-[40%]'>
                         <div className="flex flex-col gap-2 items-start justify-start text-2xl">
                             <span>HOJE</span>
-                            <span>{handleTemperature(weather?.main?.temp, showCelsius)}</span>
+                            <div>
+                                <span>
+                                    {handleTemperature(weather?.main?.temp, showCelsius)}
+                                    {showCelsius ? '°C' : '°F'}
+                                </span>
+                                <button className='ml-2 text-xs italic' onClick={() => [setShowCelsius(!showCelsius), handleTemperature(weather?.main?.temp, showCelsius)]}>
+                                    {showCelsius ? 'Fahrenheit' : 'Celsius'}
+                                </button>
+                            </div>
                         </div>
 
                         <span className='text-3xl capitalize'>{weather?.weather[0]?.description}</span>
