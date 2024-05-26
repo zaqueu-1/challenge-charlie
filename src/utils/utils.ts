@@ -44,19 +44,22 @@ const handleTemperature = (temp: number, unitInCelsius: boolean) => {
 }
 
 const handleBackgroundColor = (temperature: number | null) => {
-  if (!temperature) return 'rgba(209, 213, 219, 0.9)'
+  if (temperature === null) {
+    return 'linear-gradient(to bottom, rgba(209, 213, 219, 0.9), rgba(209, 213, 219, 0.9))'
+  }
 
   if (temperature < 15) {
-    return 'rgba(56, 189, 248, 0.9)'
+    const intensity = Math.floor((temperature / 15) * 200)
+    return `linear-gradient(to bottom, rgba(56, 189, 248, 0.9), rgba(56, 189, 248, ${0.7 + intensity / 500}))`
   } else if (temperature >= 15 && temperature <= 35) {
-    return 'rgba(250, 204, 21, 0.9)'
+    const intensity = Math.floor(((temperature - 15) / 20) * 200)
+    return `linear-gradient(to bottom, rgba(250, 204, 21, 0.9), rgba(250, 204, 21, ${0.7 + intensity / 500}))`
   } else if (temperature > 35) {
-    return 'rgba(248, 113, 113, 0.9)'
+    const intensity = Math.floor(((temperature - 35) / 15) * 200)
+    return `linear-gradient(to bottom, rgba(248, 113, 113, 0.9), rgba(248, 113, 113, ${0.7 + intensity / 500}))`
   } else {
-    return 'rgba(209, 213, 219, 0.9)'
+    return 'linear-gradient(to bottom, rgba(209, 213, 219, 0.9), rgba(209, 213, 219, 0.9))'
   }
 }
-
-
 
 export { fetchBackground, fetchLocation, fetchWeather, handleTemperature , handleBackgroundColor}

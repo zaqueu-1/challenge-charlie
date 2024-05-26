@@ -48,7 +48,7 @@ function WeatherBox(props: WeatherProps) {
 
   return (
     <div className='w-full max-w-[850px] min-w-[370px]'>
-        <div className="flex h-[440px] text-white" style={{ backgroundColor: handleBackgroundColor(weather?.main?.temp || null)}}>
+        <div className="flex h-[440px] text-white" style={{ background: handleBackgroundColor(weather?.main?.temp || null)}}>
             {weather?.main && (
                 <div className="flex flex-col gap-2 items-center justify-around w-full md:flex-row md:items-start md:justify-between">
                     <div className='flex items-center md:h-full justify-center w-[250px] md:w-[50%]'>
