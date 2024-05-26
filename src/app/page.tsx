@@ -3,7 +3,7 @@
 import SearchInput from "@/components/SearchInput/search.input"
 import MainContainer from "@/components/MainContainer/main.container"
 import WeatherBox from "@/components/WeatherBox/weather.box"
-import { WeatherData } from "@/@types/types"
+import { WeatherArray } from "@/@types/types"
 import { useEffect, useState } from "react"
 import { fetchBackground, fetchLocation, fetchWeather } from "@/utils/utils"
 
@@ -11,7 +11,7 @@ export default function Home() {
 
   const [location, setLocation] = useState<string | undefined>('')
   const [background, setBackground] = useState('')
-  const [weather, setWeather] = useState<WeatherData | undefined>()
+  const [weather, setWeather] = useState<WeatherArray>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {

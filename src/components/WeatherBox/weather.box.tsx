@@ -1,16 +1,19 @@
-import { handleTemperature, handleBackgroundColor } from '@/utils/utils'
+import { handleTemperature, handleBackgroundColor, findNextDaysWeather } from '@/utils/utils'
 import { Icons } from '@/components/Icons/icons'
-import React, { useState } from 'react'
-import { WeatherData } from '@/@types/types'
+import React, { useEffect, useState } from 'react'
+import { WeatherArray } from '@/@types/types'
+import CurrentTemperature from '@/components/CurrentTemperature/current.temperature'
 
 interface WeatherProps {
-    weather: WeatherData | undefined
+    weather: WeatherArray
 }
 
 function WeatherBox(props: WeatherProps) {
   const { weather } = props
 
   const [showCelsius, setShowCelsius] = useState(true)
+  const [nextDaysWeather, setNextDaysWeather] = useState<WeatherArray>([])
+  const currentWeather = weather[0]
 
   const handleIcon = (icon: string) => {
     switch (icon) {
@@ -46,40 +49,43 @@ function WeatherBox(props: WeatherProps) {
     }
   }
 
+  useEffect(() => {
+    setNextDaysWeather(findNextDaysWeather(weather))
+  }, [weather])
+
   return (
     <div className='w-full max-w-[850px] min-w-[370px]'>
-        <div className="flex h-[440px] text-white" style={{ background: handleBackgroundColor(weather?.main?.temp || null)}}>
-            {weather?.main && (
+        <div className="flex h-[440px]" style={{ background: handleBackgroundColor(currentWeather?.main?.temp || null)}}>
+            {currentWeather?.main && (
                 <div className="flex flex-col gap-2 items-center justify-around w-full md:flex-row md:items-start md:justify-between">
                     <div className='flex items-center md:h-full justify-center w-[250px] md:w-[50%]'>
-                        {handleIcon(weather?.weather[0]?.icon)}
+                        {handleIcon(currentWeather?.weather[0]?.icon)}
                     </div>
                     <div className='flex md:flex-col gap-2 md:gap-6 items-center justify-between md:items-start px-[1.2rem] w-[90%] md:w-[50%] md:mt-[1.2rem]'>
-                        <div className="flex flex-col items-start justify-start">
-                            <span className='md:text-[1.5rem] text-[1rem]'>HOJE</span>
-                            <div className='flex flex-col md:items-center items-start justify-center md:flex-row'>
-                                <span className='md:text-[1.8rem] text-[1.2rem]'>
-                                    {handleTemperature(weather?.main?.temp, showCelsius)}
-                                    {showCelsius ? '°C' : '°F'}
-                                </span>
-                                <button className='md:ml-2 text-xs italic' onClick={() => [setShowCelsius(!showCelsius), handleTemperature(weather?.main?.temp, showCelsius)]}>
-                                    {showCelsius ? 'Fahrenheit' : 'Celsius'}
-                                </button>
-                            </div>
-                        </div>
+                        <CurrentTemperature temperature={currentWeather?.main?.temp} label={'HOJE'} showCelsius={showCelsius} setShowCelsius={setShowCelsius} />
 
-                        <span className='md:text-[1.8rem] text-[1.2rem] text-center capitalize'>{weather?.weather[0]?.description}</span>
+                        <span className='md:text-[1.8rem] text-[1.2rem] text-center capitalize'>{currentWeather?.weather[0]?.description}</span>
 
                         <div className="flex flex-col items-start justify-between md:text-[1.5rem] text-[1rem]">
-                            <span>{'Vento: ' + weather?.wind?.speed + ' km/h'}</span>
-                            <span>{'Umidade: ' + weather?.main?.humidity + '%'}</span>
-                            <span>{'Pressão: ' + weather?.main?.pressure + 'hPa'}</span>
+                            <span>{'Vento: ' + currentWeather?.wind?.speed + ' km/h'}</span>
+                            <span>{'Umidade: ' + currentWeather?.main?.humidity + '%'}</span>
+                            <span>{'Pressão: ' + currentWeather?.main?.pressure + 'hPa'}</span>
                         </div>
                     </div>
                 </div>
             )}
         </div>
-    </div>
+        <div className='flex items-center justify-start md:justify-end h-[150px]' style={{ background: handleBackgroundColor(nextDaysWeather[0]?.main?.temp || null)}}>
+            <div className='px-[2.5rem] md:px-[1.2rem] w-[90%] md:w-[50%]'>
+                {nextDaysWeather[0]?.main && <CurrentTemperature temperature={nextDaysWeather[0]?.main?.temp} label={'AMANHÃ'} showCelsius={showCelsius} setShowCelsius={setShowCelsius} />}
+            </div>
+        </div>
+        <div className='flex items-center justify-start md:justify-end h-[140px]' style={{ background: handleBackgroundColor(nextDaysWeather[1]?.main?.temp || null)}}>
+            <div className='px-[2.5rem] md:px-[1.2rem] w-[90%] md:w-[50%]'>
+                {nextDaysWeather[1]?.main && <CurrentTemperature temperature={nextDaysWeather[1]?.main?.temp} label={'DEPOIS DE AMANHÃ'} showCelsius={showCelsius} setShowCelsius={setShowCelsius} />}
+            </div>
+        </div>
+    </div> 
   )
 }
 

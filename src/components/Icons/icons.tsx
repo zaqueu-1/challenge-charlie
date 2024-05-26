@@ -8,7 +8,7 @@ export const Icons = {
       viewBox="0 -0.5 17 17"
       {...props}
     >
-      <g fill="currentColor" fillRule="evenodd">
+      <g fill="rgb(139,137,136)" fillRule="evenodd">
         <path
           d="M8.021.035c-4.411 0-8 3.588-8 8 0 4.413 3.588 8 8 8 4.411 0 8-3.587 8-8 0-4.412-3.589-8-8-8zM8.001 14C4.69 14 2 11.308 2 8c0-3.307 2.692-6 6-6 3.31 0 6 2.693 6 6 0 3.308-2.69 6-6 6z"
           className="si-glyph-fill"

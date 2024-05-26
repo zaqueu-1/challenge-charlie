@@ -1,6 +1,7 @@
 import { getLocation } from "@/services/GeolocationService/geolocation.service"
 import { getBackground } from "@/services/BackgroundService/background.service"
 import { getWeather } from "@/services/WeatherService/weather.service"
+import { WeatherArray } from "@/@types/types"
 
 const fetchBackground = async () => {
     try {
@@ -28,7 +29,7 @@ const fetchWeather = async (location: string) => {
   try {
     const res = await getWeather(location)
     if (res.list) {
-      return res.list[0]
+      return res.list
     }
   } catch (error) {
     console.log('error', error)
@@ -62,4 +63,23 @@ const handleBackgroundColor = (temperature: number | null) => {
   }
 }
 
-export { fetchBackground, fetchLocation, fetchWeather, handleTemperature , handleBackgroundColor}
+const findNextDaysWeather = (weathers: WeatherArray) => {
+  if (weathers.length === 0) return []
+
+  const initialDate = new Date(weathers[0].dt_txt)
+
+  const targetDate1 = new Date(initialDate)
+  targetDate1.setDate(initialDate.getDate() + 1)
+  const targetDate2 = new Date(initialDate)
+  targetDate2.setDate(initialDate.getDate() + 2)
+
+  const formattedTargetDate1 = targetDate1.toISOString().slice(0, 10) + " " + targetDate1.toTimeString().slice(0, 8)
+  const formattedTargetDate2 = targetDate2.toISOString().slice(0, 10) + " " + targetDate2.toTimeString().slice(0, 8)
+
+  const weather1 = weathers.find(weather => weather.dt_txt === formattedTargetDate1)
+  const weather2 = weathers.find(weather => weather.dt_txt === formattedTargetDate2)
+
+  return [weather1, weather2].filter(Boolean) as WeatherArray
+}
+
+export { fetchBackground, fetchLocation, fetchWeather, handleTemperature , handleBackgroundColor, findNextDaysWeather }

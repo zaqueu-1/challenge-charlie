@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --text: 139, 137, 136;
+  --input: 139, 137, 136;
   --bg: whitesmoke;
+  --text: whitesmoke;
 }
 
 * {
@@ -14,8 +15,13 @@
 }
 
 body {
-  color: rgb(var(--text));
   background: rgb(var(--bg));
+  color: white;
+}
+
+input {
+  background: transparent;
+  color: rgb(var(--input));
 }
 
 @keyframes spin {
