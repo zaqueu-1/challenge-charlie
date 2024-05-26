@@ -1,4 +1,4 @@
-<img src="https://github.com/zaqueu-1/challenge-charlie/blob/master/github/logo.png" alt="logo">
+<img src="https://github.com/zaqueu-1/challenge-charlie/blob/master/github/logo.png" width='50' height='50' alt="logo">
 
 ## Challenge Charlie | Teste Técnico
 
@@ -56,7 +56,9 @@ Abaixo, algumas informações sobre minhas escolhas e tomadas de decisão durant
 * Utilizei [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) para criar rotas para o consumo das APIs requeridas no desafio. Dessa forma é possível fazer requisições com todos os métodos HTTP, facilitando também a criação dos serviços e suas respectivas funções;
 * O input realiza a busca da localidade ao pressionar o Enter, removendo a necessidade de um botão adicional na interface. Além disso, incluí uma função simples de limpeza do input ao clicar na div que o contem, facilitando a inserção de uma nova localidade;
 * Para a unidade de temperatura, além de torná-la clicável, adicionei uma legenda contendo a unidade oposta à atual. Ao ser clicada, ela alterna a unidade de todas as ocorrências de temperatura na página, assim como a própria legenda;
-* incluí uma mensagem de "Sua busca não retornou resultados" para casos onde a API não consiga encontrar uma localidade.
+* Incluí uma mensagem de "Sua busca não retornou resultados" para casos onde a API não consiga encontrar uma localidade;
+* Incluí no input uma renderização condicional que exibe 'Buscando...' enquanto a API não retorna a localidade;
+* 
 
 ## Autor
 

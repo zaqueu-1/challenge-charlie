@@ -7,7 +7,6 @@ const fetchBackground = async () => {
     try {
       const res = await getBackground()
       if (res) {
-        console.log('res', res)
         return res.images[0].url
       }
     } catch (error) {
