@@ -17,7 +17,7 @@ const fetchLocation = async (lat: number, lon: number) => {
   try {
     const res = await getLocation(lat, lon)
     if (res) {
-      return res.results[0].components.city
+      return res.results[0].components.city + ', ' + res.results[0].components.state
     }
   } catch (error) {
     console.log('error', error)

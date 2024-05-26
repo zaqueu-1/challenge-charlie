@@ -25,8 +25,6 @@ export const Icons = {
   clearSky: (props: IconProps) => (
         <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="512"
-        height="512"
         x="0"
         y="0"
         version="1.1"
@@ -82,8 +80,6 @@ export const Icons = {
   fewClouds: (props: IconProps) => (
         <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="512"
-        height="512"
         x="0"
         y="0"
         version="1.1"
@@ -137,8 +133,6 @@ export const Icons = {
   scatteredClouds: (props: IconProps) => (
         <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="512"
-        height="512"
         x="0"
         y="0"
         version="1.1"
@@ -194,8 +188,6 @@ export const Icons = {
   brokenClouds: (props: IconProps) => (
         <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="512"
-        height="512"
         x="0"
         y="0"
         version="1.1"
@@ -250,8 +242,6 @@ export const Icons = {
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlSpace="preserve"
-        width='512'
-        height='512'
         viewBox="0 0 512 512"
         x="0"
         y="0"
@@ -272,8 +262,6 @@ export const Icons = {
     <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
-    width='512'
-    height='512'
     viewBox="0 0 512 512"
     x="0"
     y="0"
@@ -294,8 +282,6 @@ export const Icons = {
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlSpace="preserve"
-        width='512'
-        height='512'
         viewBox="0 0 512 512"
         {...props}
     >
@@ -312,8 +298,6 @@ export const Icons = {
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlSpace="preserve"
-        width='512'
-        height='512'
         viewBox="0 0 512 512"
         {...props}
     >
@@ -330,8 +314,6 @@ export const Icons = {
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlSpace="preserve"
-        width='512'
-        height='512'
         viewBox="0 0 512 512"
         {...props}
     >

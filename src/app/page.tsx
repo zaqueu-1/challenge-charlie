@@ -9,7 +9,7 @@ import { fetchBackground, fetchLocation, fetchWeather } from "@/utils/utils"
 
 export default function Home() {
 
-  const [location, setLocation] = useState('')
+  const [location, setLocation] = useState<string | undefined>('')
   const [background, setBackground] = useState('')
   const [weather, setWeather] = useState<WeatherData | undefined>()
   const [loading, setLoading] = useState(false)
