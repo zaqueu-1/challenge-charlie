@@ -15,7 +15,7 @@ Utilizei as seguintes tecnologias:
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 ## Deploy
-https://https://challenge-charlie-eduardo-zaqueu.vercel.app/
+https://challenge-charlie-eduardo-zaqueu.vercel.app/
 
 ## Demonstração
 ![demo](https://github.com/zaqueu-1/challenge-charlie/blob/master/github/demo.gif)
