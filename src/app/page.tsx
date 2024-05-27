@@ -16,6 +16,10 @@ export default function Home() {
   const [error, setError] = useState(false)
 
   useEffect(() => {
+    fetchBackground().then((background) => {
+      setBackground(background)
+    })
+
     setLoading(true)
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -31,13 +35,6 @@ export default function Home() {
       }
     )
   }, [])
-
-  useEffect(() => {
-    if (background) return
-    fetchBackground().then((background) => {
-      setBackground(background)
-    })
-  }, [background])
 
   useEffect(() => {
     if (!location) return
