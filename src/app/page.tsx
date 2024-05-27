@@ -21,7 +21,7 @@ export default function Home() {
       (position) => {
         const { latitude, longitude } = position.coords
 
-        fetchLocation(latitude, longitude).then((location) => {
+        fetchLocation({ latitude, longitude }).then((location) => {
           setLocation(location)
         })
       },
@@ -45,7 +45,7 @@ export default function Home() {
     setLoading(true)
     fetchWeather(location).then((weather) => {
       setLoading(false)
-      if (weather === 'not found'){
+      if (weather === 'error fetching weather'){
         setWeather([])
         setError(true)
         return
@@ -55,9 +55,23 @@ export default function Home() {
     })
   }, [location])
 
+  const handleSearch = (search: string) => {
+    setLoading(true)
+    fetchLocation(search).then((location) => {
+      setLoading(false)
+      if (location === 'error fetching location'){
+        setWeather([])
+        setError(true)
+        return
+      }
+      setLocation(location)
+      setError(false)
+    })
+  }
+
   return (
     <MainContainer background={background}>
-      <SearchInput onSearchChange={(search) => { setLocation(search); setLoading(true); }} location={location} loading={loading} />
+      <SearchInput onSearchChange={(search) => handleSearch(search)} location={location} loading={loading} />
       <WeatherBox weather={weather} error={error} />
     </MainContainer>
   )

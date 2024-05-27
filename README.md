@@ -47,8 +47,11 @@ O projeto estará rodando na porta 3001 em http://localhost:3001
 ```
 O projeto estará rodando na porta 3000 em http://localhost:3000
 
-
 ## Testes
+Os testes foram realizados usando Jest e React Testing Library. Para rodá-los, execute o seguinte comando: 
+```bash
+  npm run test
+```  
 ## Estrutura do Projeto
 Abaixo, algumas informações sobre minhas escolhas e tomadas de decisão durante o andamento do projeto:
 

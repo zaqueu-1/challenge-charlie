@@ -14,28 +14,27 @@ const fetchBackground = async () => {
     }
 }
 
-const fetchLocation = async (lat: number, lon: number) => {
-  try {
-    const res = await getLocation(lat, lon)
-    if (res) {
-      return res.results[0].components.city + ', ' + res.results[0].components.state
+const fetchLocation = async (location: string | { latitude: number; longitude: number }) => {
+    try {
+      const res = await getLocation(location)
+      if (res) {
+        return (res.results[0].components._normalized_city || res.results[0].components.city || res.results[0].components.state) + ', ' + res.results[0].components.state
+      }
+    } catch (error) {
+      console.log('error', error)
+      return 'error fetching location'
     }
-  } catch (error) {
-    console.log('error', error)
-  }
 }
 
 const fetchWeather = async (location: string) => {
   try {
     const res = await getWeather(location)
-    if (res.message === 'city not found') {
-      return 'not found'
-    }
     if (res.list) {
       return res.list
     }
   } catch (error) {
     console.log('error', error)
+    return 'error fetching weather'
   }
 }
 
