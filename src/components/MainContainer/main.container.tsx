@@ -3,6 +3,7 @@ import React, { PropsWithChildren } from 'react'
 function MainContainer(props: PropsWithChildren & { background: string }) {
   return (
     <div
+      data-testid="main-container"
       className="relative flex flex-col min-w-[390px] min-h-screen items-center justify-start"
       style={{ backgroundImage: `url(https://bing.com/${props.background})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
