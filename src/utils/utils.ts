@@ -4,24 +4,25 @@ import { getWeather } from "@/services/WeatherService/weather.service"
 import { WeatherArray } from "@/@types/types"
 
 const fetchBackground = async () => {
-    try {
-      const res = await getBackground()
-      if (res) {
-        return res.images[0].url
-      }
-    } catch (error) {
-      console.log('error', error)
-    }
+  try {
+    const res = await getBackground()
+
+    if (res && res.images) {
+      return res.images[0].url
+    } 
+  } catch (error) {
+    console.error('Error fetching background:', error)
+  }
 }
 
 const fetchLocation = async (location: string | { latitude: number; longitude: number }) => {
     try {
       const res = await getLocation(location)
-      if (res) {
+
+      if (res && res.results) {
         return (res.results[0].components._normalized_city || res.results[0].components.city || res.results[0].components.state) + ', ' + res.results[0].components.state
       }
     } catch (error) {
-      console.log('error', error)
       return 'error fetching location'
     }
 }
@@ -29,21 +30,16 @@ const fetchLocation = async (location: string | { latitude: number; longitude: n
 const fetchWeather = async (location: string) => {
   try {
     const res = await getWeather(location)
-    if (res.list) {
+    if (res && res.list) {
       return res.list
     }
   } catch (error) {
-    console.log('error', error)
     return 'error fetching weather'
   }
 }
 
 const handleTemperature = (temp: number, unitInCelsius: boolean) => {
-  if (unitInCelsius) {
-    return temp
-  } else {
-    return (temp * 1.8) + 32
-  }
+  return unitInCelsius ? temp : (temp * 1.8) + 32
 }
 
 const handleBackgroundColor = (temperature: number | null) => {

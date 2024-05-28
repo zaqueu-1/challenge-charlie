@@ -26,12 +26,14 @@ export default function Home() {
         const { latitude, longitude } = position.coords
 
         fetchLocation({ latitude, longitude }).then((location) => {
+          setLoading(false)
+          if (location === 'error fetching location'){
+            setWeather([])
+            setError(true)
+            return
+          }
           setLocation(location)
         })
-      },
-      (error) => {
-        console.error('Geolocation error:', error)
-        setLoading(false)
       }
     )
   }, [])
