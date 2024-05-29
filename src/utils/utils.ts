@@ -62,17 +62,18 @@ const handleBackgroundColor = (temperature: number | null) => {
 }
 
 const handleTodaysWeather = (weathers: WeatherArray) => {
-  const today = new Date()
-  today.setHours(today.getHours() - today.getTimezoneOffset() / 60)
+  const now = new Date()
+  const todayDate = now.toISOString().split('T')[0]
+  const currentHour = now.getHours()
 
   return weathers.find(weather => {
     const weatherDate = new Date(weather.dt_txt)
-    return weatherDate.getDate() === today.getDate() &&
-           weatherDate.getMonth() === today.getMonth() &&
-           weatherDate.getFullYear() === today.getFullYear() &&
-           weatherDate.getHours() === today.getHours()
+    const weatherDateString = weatherDate.toISOString().split('T')[0]
+    const weatherHour = weatherDate.getHours()
+
+    return weatherDateString === todayDate && weatherHour === currentHour
   }) as WeatherData
-}
+};
 
 const handleNextDaysWeather = (weathers: WeatherArray, currentWeather: WeatherData) => {
   if (!weathers || weathers.length === 0) {

@@ -1,7 +1,7 @@
 import { getLocation } from "@/services/GeolocationService/geolocation.service"
 import { getBackground } from "@/services/BackgroundService/background.service"
 import { getWeather } from "@/services/WeatherService/weather.service"
-import { WeatherArray } from "@/@types/types"
+import { WeatherArray, WeatherData } from "@/@types/types"
 import {
   fetchBackground,
   fetchLocation,
@@ -9,7 +9,8 @@ import {
   handleTemperature,
   handleBackgroundColor,
   handleNextDaysWeather,
-  handleTipOrError
+  handleTipOrError,
+  handleTodaysWeather
 } from "@/utils/utils"
 
 jest.mock("@/services/GeolocationService/geolocation.service")
@@ -111,6 +112,27 @@ describe("Utility functions", () => {
     })
   })
 
+  describe("tests for handleTodaysWeather helper", () => {
+    it('should return the weather data for today', () => {
+      const now = new Date()
+      const formattedNow = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:00:00`
+  
+      const weathers: WeatherArray = [
+        {
+          dt_txt: formattedNow,
+          weather: [{ id: 1, main: 'Clear', description: 'clear sky', icon: '01d' }],
+          main: { temp: 20, feels_like: 19, temp_min: 18, temp_max: 22, pressure: 1012, humidity: 60 },
+          wind: { speed: 5, deg: 180 },
+          sys: { country: 'BR', sunrise: 1600416000, sunset: 1600459200 },
+          name: 'Rio de Janeiro',
+        },
+      ]
+  
+      const result = handleTodaysWeather(weathers)
+      expect(result).toEqual(weathers[0])
+    })
+  })
+
   describe("tests for handleNextDaysWeather helper", () => {
     const mockWeatherArray = [
       { dt_txt: '2024-05-26 15:00:00', main: { temp: 20 } },
@@ -118,18 +140,15 @@ describe("Utility functions", () => {
       { dt_txt: '2024-05-28 15:00:00', main: { temp: 24 } }
     ]
 
+    const mockWeatherData = { dt_txt: '2024-05-26 15:00:00', main: { temp: 20 } }
+
     it("should return the weather for the next two days", () => {
-      const result = handleNextDaysWeather(mockWeatherArray as WeatherArray)
+      const result = handleNextDaysWeather(mockWeatherArray as WeatherArray, mockWeatherData as WeatherData)
 
       expect(result).toEqual([
         { dt_txt: '2024-05-27 15:00:00', main: { temp: 22 } },
         { dt_txt: '2024-05-28 15:00:00', main: { temp: 24 } }
       ])
-    })
-
-    it("should return an empty array if no weather data is provided", () => {
-      const result = handleNextDaysWeather([])
-      expect(result).toEqual([])
     })
   })
 

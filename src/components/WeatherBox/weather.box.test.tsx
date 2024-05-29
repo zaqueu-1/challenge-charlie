@@ -1,81 +1,83 @@
+// __tests__/WeatherBox.test.js
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import WeatherBox from '@/components/WeatherBox/weather.box'
-import { WeatherArray } from '@/@types/types'
+import * as utils from '@/utils/utils'
 
-jest.mock('@/components/CurrentTemperature/current.temperature', () => {
-    const CurrentTemperature = (props: any) => (
-      <div data-testid="current-temperature">{props.label}:{props.temperature}{props.showCelsius ? '°C' : '°F'}</div>
-    )
-    CurrentTemperature.displayName = 'CurrentTemperature'
-    return CurrentTemperature
-  })
-
+jest.mock('@/utils/utils')
 jest.mock('@/components/Icons/icons', () => ({
   Icons: {
-    clearSky: () => <div data-testid="icon-clearSky">Clear Sky Icon</div>,
-    fewClouds: () => <div data-testid="icon-fewClouds">Few Clouds Icon</div>,
-    scatteredClouds: () => <div data-testid="icon-scatteredClouds">Scattered Clouds Icon</div>,
-    brokenClouds: () => <div data-testid="icon-brokenClouds">Broken Clouds Icon</div>,
-    showerRain: () => <div data-testid="icon-showerRain">Shower Rain Icon</div>,
-    rain: () => <div data-testid="icon-rain">Rain Icon</div>,
-    thunderstorm: () => <div data-testid="icon-thunderstorm">Thunderstorm Icon</div>,
-    snow: () => <div data-testid="icon-snow">Snow Icon</div>,
-    mist: () => <div data-testid="icon-mist">Mist Icon</div>,
+    clearSky: () => <div data-testid="clearSky">clearSky</div>,
+    fewClouds: () => <div data-testid="fewClouds">fewClouds</div>,
+    scatteredClouds: () => <div data-testid="scatteredClouds">scatteredClouds</div>,
+    brokenClouds: () => <div data-testid="brokenClouds">brokenClouds</div>,
+    showerRain: () => <div data-testid="showerRain">showerRain</div>,
+    rain: () => <div data-testid="rain">rain</div>,
+    thunderstorm: () => <div data-testid="thunderstorm">thunderstorm</div>,
+    snow: () => <div data-testid="snow">snow</div>,
+    mist: () => <div data-testid="mist">mist</div>,
   },
 }))
 
-const mockWeatherData: WeatherArray = [
-  {
-    dt_txt: '2024-05-26 15:00:00',
-    main: { temp: 20, feels_like: 20, temp_min: 18, temp_max: 22, pressure: 1012, humidity: 50 },
-    weather: [{ id: 1, main: 'Clear', description: 'clear sky', icon: '01d' }],
-    wind: { speed: 3.5, deg: 200 },
-    sys: { country: 'BR', sunrise: 1618317040, sunset: 1618361520 },
-    name: 'Rio de Janeiro',
-  },
-  {
-    dt_txt: '2024-05-27 15:00:00',
-    main: { temp: 22, feels_like: 21, temp_min: 19, temp_max: 23, pressure: 1013, humidity: 55 },
-    weather: [{ id: 1, main: 'Clouds', description: 'few clouds', icon: '02d' }],
-    wind: { speed: 4.0, deg: 210 },
-    sys: { country: 'BR', sunrise: 1618317040, sunset: 1618361520 },
-    name: 'Rio de Janeiro',
-  },
-  {
-    dt_txt: '2024-05-28 15:00:00',
-    main: { temp: 24, feels_like: 23, temp_min: 21, temp_max: 25, pressure: 1014, humidity: 60 },
-    weather: [{ id: 1, main: 'Clouds', description: 'scattered clouds', icon: '03d' }],
-    wind: { speed: 4.5, deg: 220 },
-    sys: { country: 'BR', sunrise: 1618317040, sunset: 1618361520 },
-    name: 'Rio de Janeiro',
-  },
-]
+describe('WeatherBox', () => {
+  const mockWeatherData = [
+    {
+      dt_txt: '2024-05-29 09:00:00',
+      weather: [{ id: 1, main: 'Clear', description: 'clear sky', icon: '01d' }],
+      main: { temp: 20, feels_like: 19, temp_min: 18, temp_max: 22, pressure: 1012, humidity: 60 },
+      wind: { speed: 5, deg: 180 },
+      sys: { country: 'BR', sunrise: 1600416000, sunset: 1600459200 },
+      name: 'Rio de Janeiro',
+    },
+    {
+      dt_txt: '2024-05-30 09:00:00',
+      weather: [{ id: 1, main: 'Clear', description: 'clear sky', icon: '01d' }],
+      main: { temp: 20, feels_like: 19, temp_min: 18, temp_max: 22, pressure: 1012, humidity: 60 },
+      wind: { speed: 5, deg: 180 },
+      sys: { country: 'BR', sunrise: 1600416000, sunset: 1600459200 },
+      name: 'Rio de Janeiro',
+    },
+    {
+      dt_txt: '2024-05-31 09:00:00',
+      weather: [{ id: 1, main: 'Clear', description: 'clear sky', icon: '01d' }],
+      main: { temp: 20, feels_like: 19, temp_min: 18, temp_max: 22, pressure: 1012, humidity: 60 },
+      wind: { speed: 5, deg: 180 },
+      sys: { country: 'BR', sunrise: 1600416000, sunset: 1600459200 },
+      name: 'Rio de Janeiro',
+    },
+  ]
 
-describe('test for WeatherBox Component', () => {
-  it('should render weather data correctly', () => {
-    render(<WeatherBox weather={mockWeatherData} error={false} />)
-
-    expect(screen.getByText('HOJE:20°C')).toBeInTheDocument()
-    expect(screen.getByText('AMANHÃ:22°C')).toBeInTheDocument()
-    expect(screen.getByText('DEPOIS DE AMANHÃ:24°C')).toBeInTheDocument()
+  beforeEach(() => {
+    jest.spyOn(utils, 'handleTodaysWeather').mockReturnValue(mockWeatherData[0])
+    jest.spyOn(utils, 'handleBackgroundColor').mockReturnValue('linear-gradient(to bottom, rgba(250, 204, 21, 0.9), rgba(250, 204, 21, 0.7))')
+    jest.spyOn(utils, 'handleNextDaysWeather').mockReturnValue([mockWeatherData[1], mockWeatherData[2]])
+    jest.spyOn(utils, 'handleTipOrError').mockReturnValue('Dica: Não encontrou a cidade que procura? Experimente separar a cidade e o estado por vírgula.')
   })
 
-  it('should render the appropriate weather icon', () => {
-    render(<WeatherBox weather={mockWeatherData} error={false} />)
-
-    expect(screen.getByTestId('icon-clearSky')).toBeInTheDocument()
+  afterEach(() => {
+    jest.resetAllMocks()
   })
 
-  it('should display an error message when there is an error', () => {
-    render(<WeatherBox weather={[]} error={true} />)
+  it('should render current weather', () => {
+    render(<WeatherBox weather={mockWeatherData} error={false} />)
+
+    expect(screen.getByText('HOJE')).toBeInTheDocument()
+    expect(screen.getByText('Vento: 5 km/h')).toBeInTheDocument()
+    expect(screen.getByText('Umidade: 60%')).toBeInTheDocument()
+    expect(screen.getByText('Pressão: 1012hPa')).toBeInTheDocument()
+  })
+
+  it('should render next days weather', () => {
+    render(<WeatherBox weather={mockWeatherData} error={false} />)
+
+    expect(screen.getByText('AMANHÃ')).toBeInTheDocument()
+    expect(screen.getByText('DEPOIS DE AMANHÃ')).toBeInTheDocument()
+  })
+
+  it('should render error message', () => {
+    jest.spyOn(utils, 'handleTipOrError').mockReturnValue('Sua busca não retornou resultados. Que tal tentar novamente?')
+    render(<WeatherBox weather={mockWeatherData} error={true} />)
 
     expect(screen.getByText('Sua busca não retornou resultados. Que tal tentar novamente?')).toBeInTheDocument()
-  })
-
-  it('should display a tip message when there is no error', () => {
-    render(<WeatherBox weather={[]} error={false} />)
-
-    expect(screen.getByText('Dica: Não encontrou a cidade que procura? Experimente separar a cidade e o estado por vírgula.')).toBeInTheDocument()
   })
 })

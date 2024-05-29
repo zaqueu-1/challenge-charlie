@@ -56,8 +56,6 @@ function WeatherBox(props: WeatherProps) {
       return
     }
     setNextDaysWeather(handleNextDaysWeather(weather, currentWeather as WeatherData))
-    console.log(currentWeather)
-    console.log(nextDaysWeather)
   }, [weather])
 
   return (
