@@ -70,6 +70,12 @@ describe('test for WeatherBox Component', () => {
   it('should display an error message when there is an error', () => {
     render(<WeatherBox weather={[]} error={true} />)
 
-    expect(screen.getByText('Sua busca não retornou resultados')).toBeInTheDocument()
+    expect(screen.getByText('Sua busca não retornou resultados. Que tal tentar novamente?')).toBeInTheDocument()
+  })
+
+  it('should display a tip message when there is no error', () => {
+    render(<WeatherBox weather={[]} error={false} />)
+
+    expect(screen.getByText('Dica: Não encontrou a cidade que procura? Experimente separar a cidade e o estado por vírgula.')).toBeInTheDocument()
   })
 })

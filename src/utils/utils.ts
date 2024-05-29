@@ -61,7 +61,7 @@ const handleBackgroundColor = (temperature: number | null) => {
   }
 }
 
-const findNextDaysWeather = (weathers: WeatherArray) => {
+const handleNextDaysWeather = (weathers: WeatherArray) => {
   if (!weathers || weathers.length === 0) {
     return []
   }
@@ -82,4 +82,12 @@ const findNextDaysWeather = (weathers: WeatherArray) => {
   return [weather1, weather2].filter(Boolean) as WeatherArray
 }
 
-export { fetchBackground, fetchLocation, fetchWeather, handleTemperature , handleBackgroundColor, findNextDaysWeather }
+const handleTipOrError = (error: boolean): string => {
+  if (error) {
+    return 'Sua busca não retornou resultados. Que tal tentar novamente?'
+  } else {
+    return 'Dica: Não encontrou a cidade que procura? Experimente separar a cidade e o estado por vírgula.'
+  }
+}
+
+export { fetchBackground, fetchLocation, fetchWeather, handleTemperature , handleBackgroundColor, handleNextDaysWeather, handleTipOrError }
