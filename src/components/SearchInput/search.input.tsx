@@ -11,7 +11,6 @@ function SearchInput(props: SearchProps) {
     const { onSearchChange, location, loading } = props
 
     const [search, setSearch] = useState('')
-    const [placeholder, setPlaceholder] = useState(true)
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' && search.length >= 2) {
@@ -21,7 +20,6 @@ function SearchInput(props: SearchProps) {
 
     const clearInput = () => {
         setSearch('')
-        setPlaceholder(false)
     }
 
     useEffect(() => {
@@ -34,11 +32,11 @@ function SearchInput(props: SearchProps) {
             <Icons.compass className={`w-[60px] md:w-[90px] h-auto rotate-90 ${loading ? 'spinner' : ''}`} />
             <input
                 type='text'
-                className='w-[90%] h-full md:text-[2.2rem] text-[1.6rem] font-bold bg-transparent placeholder:text-[rgb(var(--secondary))] focus:outline-none'
-                placeholder={loading ? 'Buscando...' : !loading && placeholder ? 'Buscar cidade...' : ''}
+                className='w-[90%] truncate h-full md:text-[2.2rem] text-[1.6rem] font-bold bg-transparent placeholder:text-[rgb(var(--secondary))] focus:outline-none'
+                placeholder={loading ? 'Buscando...' : 'Buscar cidade...'}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                onBlur={() => [setPlaceholder(true), setSearch(location || '')]}
+                onBlur={() => setSearch(location || '')}
                 onKeyDown={handleKeyDown}
                 disabled={loading}
             />
