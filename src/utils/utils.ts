@@ -62,22 +62,29 @@ const handleBackgroundColor = (temperature: number | null) => {
 }
 
 const handleTodaysWeather = (weathers: WeatherArray) => {
+  if (!weathers || weathers.length === 0) {
+    return
+  }
+
   const now = new Date()
   const todayDate = now.toISOString().split('T')[0]
-  const currentHour = now.getHours()
 
-  return weathers.find(weather => {
+  weathers.sort((a, b) => new Date(a.dt_txt).getTime() - new Date(b.dt_txt).getTime())
+
+  const currentWeather = weathers.find(weather => {
     const weatherDate = new Date(weather.dt_txt)
     const weatherDateString = weatherDate.toISOString().split('T')[0]
-    const weatherHour = weatherDate.getHours()
 
-    return weatherDateString === todayDate && weatherHour === currentHour
+    return weatherDateString === todayDate && weatherDate.getTime() > now.getTime()
   }) as WeatherData
-};
+
+  return currentWeather
+}
+
 
 const handleNextDaysWeather = (weathers: WeatherArray, currentWeather: WeatherData) => {
-  if (!weathers || weathers.length === 0) {
-    return []
+  if (!weathers || !currentWeather) {
+    return 
   }
 
   const initialDate = new Date(currentWeather.dt_txt)
@@ -92,6 +99,8 @@ const handleNextDaysWeather = (weathers: WeatherArray, currentWeather: WeatherDa
 
   const weather1 = weathers.find(weather => weather.dt_txt === formattedTargetDate1)
   const weather2 = weathers.find(weather => weather.dt_txt === formattedTargetDate2)
+
+  console.log(currentWeather, weather1, weather2)
 
   return [weather1, weather2].filter(Boolean) as WeatherArray
 }

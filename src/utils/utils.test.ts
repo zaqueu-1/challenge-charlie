@@ -113,13 +113,14 @@ describe("Utility functions", () => {
   })
 
   describe("tests for handleTodaysWeather helper", () => {
-    it('should return the weather data for today', () => {
+    it('should return the weather data for today closest to the current time', () => {
       const now = new Date()
-      const formattedNow = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:00:00`
+      const nextHour = new Date(now.getTime() + 60 * 60 * 1000) 
+      const formattedNextHour = `${nextHour.getFullYear()}-${String(nextHour.getMonth() + 1).padStart(2, '0')}-${String(nextHour.getDate()).padStart(2, '0')} ${String(nextHour.getHours()).padStart(2, '0')}:00:00`
   
       const weathers: WeatherArray = [
         {
-          dt_txt: formattedNow,
+          dt_txt: formattedNextHour,
           weather: [{ id: 1, main: 'Clear', description: 'clear sky', icon: '01d' }],
           main: { temp: 20, feels_like: 19, temp_min: 18, temp_max: 22, pressure: 1012, humidity: 60 },
           wind: { speed: 5, deg: 180 },
@@ -132,6 +133,7 @@ describe("Utility functions", () => {
       expect(result).toEqual(weathers[0])
     })
   })
+  
 
   describe("tests for handleNextDaysWeather helper", () => {
     const mockWeatherArray = [

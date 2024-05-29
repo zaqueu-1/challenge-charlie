@@ -14,7 +14,7 @@ function WeatherBox(props: WeatherProps) {
 
   const [showCelsius, setShowCelsius] = useState(true)
   const [nextDaysWeather, setNextDaysWeather] = useState<WeatherArray>([])
-  const currentWeather: WeatherData = handleTodaysWeather(weather)
+  const currentWeather = handleTodaysWeather(weather)
 
   const handleIcon = (icon: string) => {
     switch (icon) {
@@ -55,8 +55,9 @@ function WeatherBox(props: WeatherProps) {
       setNextDaysWeather([])
       return
     }
-    setNextDaysWeather(handleNextDaysWeather(weather, currentWeather as WeatherData))
-  }, [weather])
+    const nextDays = handleNextDaysWeather(weather, currentWeather as WeatherData)
+    nextDays && setNextDaysWeather(nextDays)
+  }, [weather, currentWeather])
 
   return (
     <div className='w-full max-w-[850px] min-w-[370px]'>
