@@ -1,7 +1,7 @@
 import { getLocation } from "@/services/GeolocationService/geolocation.service"
 import { getBackground } from "@/services/BackgroundService/background.service"
 import { getWeather } from "@/services/WeatherService/weather.service"
-import { WeatherArray } from "@/@types/types"
+import { WeatherArray, WeatherData } from "@/@types/types"
 
 const fetchBackground = async () => {
   try {
@@ -61,12 +61,25 @@ const handleBackgroundColor = (temperature: number | null) => {
   }
 }
 
-const handleNextDaysWeather = (weathers: WeatherArray) => {
+const handleTodaysWeather = (weathers: WeatherArray) => {
+  const today = new Date()
+  today.setHours(today.getHours() - today.getTimezoneOffset() / 60)
+
+  return weathers.find(weather => {
+    const weatherDate = new Date(weather.dt_txt)
+    return weatherDate.getDate() === today.getDate() &&
+           weatherDate.getMonth() === today.getMonth() &&
+           weatherDate.getFullYear() === today.getFullYear() &&
+           weatherDate.getHours() === today.getHours()
+  }) as WeatherData
+}
+
+const handleNextDaysWeather = (weathers: WeatherArray, currentWeather: WeatherData) => {
   if (!weathers || weathers.length === 0) {
     return []
   }
 
-  const initialDate = new Date(weathers[0].dt_txt)
+  const initialDate = new Date(currentWeather.dt_txt)
 
   const targetDate1 = new Date(initialDate)
   targetDate1.setDate(initialDate.getDate() + 1)
@@ -90,4 +103,4 @@ const handleTipOrError = (error: boolean): string => {
   }
 }
 
-export { fetchBackground, fetchLocation, fetchWeather, handleTemperature , handleBackgroundColor, handleNextDaysWeather, handleTipOrError }
+export { fetchBackground, fetchLocation, fetchWeather, handleTemperature , handleBackgroundColor, handleTodaysWeather, handleNextDaysWeather, handleTipOrError }

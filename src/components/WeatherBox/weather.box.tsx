@@ -1,7 +1,7 @@
-import { handleTemperature, handleBackgroundColor, handleNextDaysWeather, handleTipOrError } from '@/utils/utils'
+import { handleBackgroundColor, handleNextDaysWeather, handleTipOrError, handleTodaysWeather } from '@/utils/utils'
 import { Icons } from '@/components/Icons/icons'
 import React, { useEffect, useState } from 'react'
-import { WeatherArray } from '@/@types/types'
+import { WeatherArray, WeatherData } from '@/@types/types'
 import CurrentTemperature from '@/components/CurrentTemperature/current.temperature'
 
 interface WeatherProps {
@@ -14,7 +14,7 @@ function WeatherBox(props: WeatherProps) {
 
   const [showCelsius, setShowCelsius] = useState(true)
   const [nextDaysWeather, setNextDaysWeather] = useState<WeatherArray>([])
-  const currentWeather = weather ? weather[0] : null
+  const currentWeather: WeatherData = handleTodaysWeather(weather)
 
   const handleIcon = (icon: string) => {
     switch (icon) {
@@ -55,7 +55,9 @@ function WeatherBox(props: WeatherProps) {
       setNextDaysWeather([])
       return
     }
-    setNextDaysWeather(handleNextDaysWeather(weather))
+    setNextDaysWeather(handleNextDaysWeather(weather, currentWeather as WeatherData))
+    console.log(currentWeather)
+    console.log(nextDaysWeather)
   }, [weather])
 
   return (
@@ -64,7 +66,7 @@ function WeatherBox(props: WeatherProps) {
           <div className='flex flex-col items-center justify-center text-center w-full italic text-xs flex-wrap p-1 bg-[rgba(0,0,0,0.2)]'>
             {handleTipOrError(error)}
           </div>
-          {currentWeather?.main && (
+          {currentWeather && currentWeather?.main && (
               <div className="flex flex-col gap-2 items-center justify-around w-full md:flex-row md:items-start md:justify-between">
                   <div className='flex items-center md:h-full justify-center w-[250px] md:w-[50%]'>
                       {handleIcon(currentWeather?.weather[0]?.icon)}
@@ -72,7 +74,7 @@ function WeatherBox(props: WeatherProps) {
                   <div className='flex md:flex-col gap-2 md:gap-6 items-center justify-between md:items-start px-[1.2rem] w-[90%] md:w-[50%] md:mt-[1.2rem]'>
                       <CurrentTemperature temperature={currentWeather?.main?.temp} label={'HOJE'} showCelsius={showCelsius} setShowCelsius={setShowCelsius} />
 
-                      <span className='md:text-[1.8rem] text-[1.2rem] text-center capitalize'>{currentWeather?.weather[0]?.description}</span>
+                      <span className='md:text-[1.8rem] text-[1.2rem] text-center capitalize'>{currentWeather?.weather[0]?.description || ''}</span>
 
                       <div className="flex flex-col items-start justify-between md:text-[1.5rem] text-[1rem]">
                           <span>{'Vento: ' + currentWeather?.wind?.speed + ' km/h'}</span>

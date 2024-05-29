@@ -1,4 +1,4 @@
-type WeatherData = {
+export type WeatherData = {
   dt_txt: string;
   weather: Array<{
     id: number;
