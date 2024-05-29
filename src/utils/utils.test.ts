@@ -134,7 +134,6 @@ describe("Utility functions", () => {
     })
   })
   
-
   describe("tests for handleNextDaysWeather helper", () => {
     const mockWeatherArray = [
       { dt_txt: '2024-05-26 15:00:00', main: { temp: 20 } },

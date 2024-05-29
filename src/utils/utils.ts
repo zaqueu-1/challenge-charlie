@@ -84,7 +84,7 @@ const handleTodaysWeather = (weathers: WeatherArray) => {
 
 const handleNextDaysWeather = (weathers: WeatherArray, currentWeather: WeatherData) => {
   if (!weathers || !currentWeather) {
-    return 
+    return []
   }
 
   const initialDate = new Date(currentWeather.dt_txt)
@@ -99,8 +99,6 @@ const handleNextDaysWeather = (weathers: WeatherArray, currentWeather: WeatherDa
 
   const weather1 = weathers.find(weather => weather.dt_txt === formattedTargetDate1)
   const weather2 = weathers.find(weather => weather.dt_txt === formattedTargetDate2)
-
-  console.log(currentWeather, weather1, weather2)
 
   return [weather1, weather2].filter(Boolean) as WeatherArray
 }
