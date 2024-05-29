@@ -59,9 +59,9 @@ Abaixo, algumas informações sobre minhas escolhas e tomadas de decisão durant
 * Utilizei [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) para criar rotas para o consumo das APIs requeridas no desafio. Dessa forma é possível fazer requisições com todos os métodos HTTP, facilitando também a criação dos serviços e suas respectivas funções;
 * O input realiza a busca da localidade ao pressionar o Enter, removendo a necessidade de um botão adicional na interface. Além disso, incluí uma função simples de limpeza do input ao clicar na div que o contem, facilitando a inserção de uma nova localidade;
 * Para a unidade de temperatura, além de torná-la clicável, adicionei uma legenda contendo a unidade oposta à atual. Ao ser clicada, ela alterna a unidade de todas as ocorrências de temperatura na página, assim como a própria legenda;
-* Incluí uma mensagem de "Sua busca não retornou resultados" para casos onde a API não consiga encontrar uma localidade;
 * Incluí no input uma renderização condicional que exibe 'Buscando...' enquanto a API não retorna a localidade;
-* Mantive a .env no repositório pelo fato de a chave de API fornecida no desafio para a OpenCage estar inválida. Criei minha própria conta e inseri minha chave, que servirá para os eventuais testes da equipe de avaliação.
+* Mantive a .env no repositório pelo fato de a chave de API fornecida no desafio para a OpenCage estar inválida. Criei minha própria conta e inseri minha chave, que servirá para os eventuais testes da equipe de avaliação;
+* Incluí uma sutil faixa abaixo do input que exibe uma mensagem de erro caso a API não encontre a localização desejada. Na ausência de erros, ela irá exibir uma dica pro usuário, informando que é possível separar estado e cidade por vírgula caso a busca não retorne o resultado esperado.
 
 ## Autor
 
